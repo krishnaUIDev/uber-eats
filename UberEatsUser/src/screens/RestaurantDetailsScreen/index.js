@@ -1,22 +1,37 @@
-import { StyleSheet, FlatList, View, Image, Text } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import restaurants from '../../../assets/data/restaurants.json';
 import DishListItem from '../../components/DishListItem';
-const restaurant = restaurants[0];
+import restaurants from '../../../assets/data/restaurants.json';
 import Header from './Header';
 import styles from './styles';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
-export default function RestarantDetailsScreen() {
+const restaurant = restaurants[0];
+
+const RestaurantDetailsPage = () => {
+  const route = useRoute();
+  const navigation = useNavigation();
+
+  const id = route.params?.id;
+  console.warn(id);
+
   return (
     <View style={styles.page}>
       <FlatList
         ListHeaderComponent={() => <Header restaurant={restaurant} />}
         data={restaurant.dishes}
         renderItem={({ item }) => <DishListItem dish={item} />}
+        keyExtractor={(item) => item.name}
       />
-      <View style={styles.iconContainer}>
-        <Ionicons name="arrow-back-circle" size={45} color="white" />
-      </View>
+      <Ionicons
+        onPress={() => navigation.goBack()}
+        name="arrow-back-circle"
+        size={45}
+        color="white"
+        style={styles.iconContainer}
+      />
     </View>
   );
-}
+};
+
+export default RestaurantDetailsPage;

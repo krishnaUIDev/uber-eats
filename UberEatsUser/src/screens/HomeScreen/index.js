@@ -1,5 +1,5 @@
 import { StyleSheet, FlatList, View } from 'react-native';
-import RestarantItem from '../../components/RestaruantItem';
+import RestaurantItem from '../../components/RestaurantItem';
 import restaurants from '../../../assets/data/restaurants.json';
 
 export default function HomeScreen() {
@@ -7,8 +7,8 @@ export default function HomeScreen() {
     <View style={styles.page}>
       <FlatList
         data={restaurants}
+        renderItem={({ item }) => <RestaurantItem restaurant={item} />}
         showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => <RestarantItem restaurant={item} />}
       />
     </View>
   );
